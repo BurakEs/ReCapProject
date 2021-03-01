@@ -11,7 +11,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarGetCarDetailTest();
+            //CarGetCarDetailTest();
             //CarGetAllTest();
             //CarGetByIdTest(2);
             //CarAddingTest();
@@ -20,29 +20,40 @@ namespace ConsoleUI
             //BrandUpdateTest();
             //ColorAddingTest();
             //ColorGetById(2);
-            //ColorUpdateTest();
+            ColorUpdateTest();
         }
 
         #region Brand
         private static void ColorAddingTest()
         {
+
             ColorManager colorManager = new ColorManager(new EfColorDal());
-            colorManager.Add(new Color { ColorName = "Kırmızı" });
-            colorManager.Add(new Color { ColorName = "Siyah" });
-            colorManager.Add(new Color { ColorName = "Kırmızı" });
-            colorManager.Add(new Color { ColorName = "Siyah" });
+            var result = colorManager.Add(new Color { ColorName = "Kırmızı" });
+            Console.WriteLine(result.Message);
+
+            result = colorManager.Add(new Color { ColorName = "Siyah" });
+            Console.WriteLine(result.Message);
+
+            result = colorManager.Add(new Color { ColorName = "Kırmızı" });
+            Console.WriteLine(result.Message);
+
+            result = colorManager.Add(new Color { ColorName = "Siyah" });
+            Console.WriteLine(result.Message);
         }
         private static void ColorUpdateTest()
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
-            colorManager.Update(new Color { Id = 3, ColorName = "Fiat" });
-            colorManager.Update(new Color { Id = 4, ColorName = "Tofaş" });
+            var result = colorManager.Update(new Color { Id = 3, ColorName = "Fiat" });
+            Console.WriteLine(result.Message);
+
+            result =colorManager.Update(new Color { Id = 4, ColorName = "Tofaş" });
+            Console.WriteLine(result.Message);
         }
         private static void ColorGetById(int id)
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
             var result = colorManager.GetById(id);
-            Console.WriteLine($"{result.Id} // {result.ColorName} ");
+            Console.WriteLine($"{result.Data.Id} // {result.Data.ColorName} ");
         }
         #endregion
 
@@ -63,7 +74,7 @@ namespace ConsoleUI
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             var result = brandManager.GetById(id);
-            Console.WriteLine($"{result.Id} // {result.BrandName} ");
+            Console.WriteLine($"{result.Data.Id} // {result.Data.BrandName} ");
         }
         #endregion
 
@@ -85,13 +96,13 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
             var result = carManager.GetById(carId);
-            Console.WriteLine($"{result.Id} // {result.CarName} // {result.ModelYear} ");
+            Console.WriteLine($"{result.Data.Id} // {result.Data.CarName} // {result.Data.ModelYear} ");
         }
         private static void CarGetCarDetailTest()
         {
             CarManager carManager = new CarManager(new EfCarDal());
             var result = carManager.GetCarDetails();
-            foreach (var c in result)
+            foreach (var c in result.Data)
             {
                 Console.WriteLine($"{c.CarId} // {c.CarName} // {c.BrandName} // {c.ColorName} // {c.DailyPrice}");
             }
@@ -101,7 +112,7 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
             var result = carManager.GetAll();
-            foreach (var c in result)
+            foreach (var c in result.Data)
             {
                 Console.WriteLine($"{c.Id} // {c.CarName} // {c.ModelYear} ");
             }
