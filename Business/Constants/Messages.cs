@@ -13,5 +13,6 @@ namespace Business.Constants
         public static string DailyPriceInValid = "Günlük ücret geçersiz";
         public static string MaintenanceTime = "Bakım zamanı";
         public static string Listed = "Listelendi";
+        public static string RentalFail = "Kiralama BAŞARISIZ";
     }
 }

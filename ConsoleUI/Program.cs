@@ -20,8 +20,69 @@ namespace ConsoleUI
             //BrandUpdateTest();
             //ColorAddingTest();
             //ColorGetById(2);
-            ColorUpdateTest();
+            //ColorUpdateTest();
+            //UserAndCustomerAdd();
+            //UserAndCustomerDelete(11);
+            //RentalAdd();
+            GetRentalDetail();
         }
+
+        private static void GetRentalDetail()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            var result = rentalManager.GetRentalDetail();
+            foreach (var r in result.Data)
+            {
+                Console.WriteLine($"{r.CarName} // {r.CompanyName}  // {r.BrandName}  // {r.ColorName}  // {r.RentDate}  // {r.ReturnDate} ");
+            }
+        }
+
+        private static void RentalAdd()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            var result = rentalManager.Add(new Rental { CarId = 1, CustomerId = 1, RentDate = DateTime.Now });
+            Console.WriteLine(result.Message);
+        }
+
+
+
+        #region User
+        private static void UserAndCustomerAdd()
+        {
+
+            UserManager userManager = new UserManager(new EfUserDal());
+            User user = new User { FirstName = "Burak", LastName = "Esen", Email = "burak@burak.cm", Password = "123456" };
+            userManager.Add(user);
+
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            customerManager.Add(new Customer { UserId = userManager.Get(user).Data.Id, CompanyName = "BE Lim." });
+
+
+ 
+            User userTwo = new User { FirstName = "Samet", LastName = "Öz", Email = "SAMET@SAMET.cm", Password = "123456" };
+            userManager.Add(userTwo);
+
+            customerManager.Add(new Customer { UserId = userManager.Get(userTwo).Data.Id, CompanyName = "Sö Lim." });
+
+        }
+        private static void UserAndCustomerDelete(int userId)
+        {
+
+            UserManager userManager = new UserManager(new EfUserDal());
+            var user = userManager.GetById(userId).Data;
+            
+
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            if (customerManager.GetByUserId(user.Id).Data != null)
+            {
+                Console.WriteLine("GİRDİ");
+                customerManager.Delete(customerManager.GetByUserId(user.Id).Data);
+            }
+           
+            userManager.Delete(user);
+
+        }
+        #endregion
 
         #region Brand
         private static void ColorAddingTest()
