@@ -1,7 +1,6 @@
 ﻿using Business.Concrete;
-using DataAccess.Abstract;
+using Core.Entities.Concrete;
 using DataAccess.Concrete.EntityFramework;
-using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using System;
 
@@ -47,24 +46,24 @@ namespace ConsoleUI
 
 
         #region User
-        private static void UserAndCustomerAdd()
-        {
+        //private static void UserAndCustomerAdd()
+        //{
 
-            UserManager userManager = new UserManager(new EfUserDal());
-            User user = new User { FirstName = "Burak", LastName = "Esen", Email = "burak@burak.cm", Password = "123456" };
-            userManager.Add(user);
+        //    UserManager userManager = new UserManager(new EfUserDal());
+        //    User user = new User { FirstName = "Burak", LastName = "Esen", Email = "burak@burak.cm", PasswordHash = "123456" };
+        //    userManager.Add(user);
 
-            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
-            customerManager.Add(new Customer { UserId = userManager.Get(user).Data.Id, CompanyName = "BE Lim." });
+        //    CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+        //    customerManager.Add(new Customer { UserId = userManager.Get(user).Data.Id, CompanyName = "BE Lim." });
 
 
  
-            User userTwo = new User { FirstName = "Samet", LastName = "Öz", Email = "SAMET@SAMET.cm", Password = "123456" };
-            userManager.Add(userTwo);
+        //    User userTwo = new User { FirstName = "Samet", LastName = "Öz", Email = "SAMET@SAMET.cm", Password = "123456" };
+        //    userManager.Add(userTwo);
 
-            customerManager.Add(new Customer { UserId = userManager.Get(userTwo).Data.Id, CompanyName = "Sö Lim." });
+        //    customerManager.Add(new Customer { UserId = userManager.Get(userTwo).Data.Id, CompanyName = "Sö Lim." });
 
-        }
+        //}
         private static void UserAndCustomerDelete(int userId)
         {
 
